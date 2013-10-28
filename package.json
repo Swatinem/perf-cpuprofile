@@ -1,0 +1,27 @@
+{
+  "name": "perf-cpuprofile",
+  "description": "Converts linux `perf` tool output to .cpuprofile files readable by chromiums devtools",
+  "version": "0.0.1",
+  "keywords": [],
+  "bin": {
+    "perfcpuprofile": "./bin/perfcpuprofile.js"
+  },
+  "main": "./index",
+  "maintainers": [
+    "Arpad Borsos <arpad.borsos@googlemail.com> (http://swatinem.de)"
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*",
+    "jscoverage": "*",
+    "coveralls": "*",
+    "mocha-lcov-reporter": "*"
+  },
+  "scripts": {
+    "test": "make test && make test-coveralls"
+  },
+  "repository": "git://github.com/Swatinem/perf-cpuprofile.git",
+  "license": "LGPLv3"
+}
