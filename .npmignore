@@ -10,3 +10,4 @@ Makefile
 .travis.yml
 perf.data*
 *.cpuprofile
+example.png

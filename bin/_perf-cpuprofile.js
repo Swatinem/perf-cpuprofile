@@ -1,10 +1,19 @@
 #!/usr/bin/env node
 
+var spawn = require('child_process').spawn;
+var write = require('fs').writeFileSync;
 var perfCpuprofile = require('../');
 
-// TODO: detect if we are running through a pipe, and automatically
-// pipe through `perf script` into `perf.cpuprofile` if not
+var input = process.stdin;
+if (input.isTTY) {
+	var perf = spawn('perf', ['script']);
+	input = perf.stdout;
+}
 
-perfCpuprofile(process.stdin, function (profile) {
-	console.log(JSON.stringify(profile));
+perfCpuprofile(input, function (profile) {
+	var out = JSON.stringify(profile);
+	if (process.argv[2] == '--')
+		console.log(out);
+	else
+		write('perf.cpuprofile', out);
 });

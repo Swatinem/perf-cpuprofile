@@ -8,12 +8,33 @@ Converts linux `perf` tool output to .cpuprofile files readable by chromiums dev
 
 ## Installation
 
-    $ npm install perf-cpuprofile
+    $ npm install -g perf-cpuprofile
 
 ## Usage
 
+Generate a `perf` trace: 
+
+    $ perf record -p `pidof sourceview` -g dwarf
+
+Then simply run:
+
+    $ perf-cpuprofile
+
+Or if you have custom file names or just love to pipe:
+
+    $ cat custom.perf.data | perf script | perf-cpuprofile -- > custom.cpuprofile
+
+Calling `perf-cpuprofile` with the argument `--` makes it output to stdout instead
+of writing to the default `perf.cpuprofile` file.
+
+Then just open up the file in chromiums devtools profile tab, and voilà:
+
+![chromiums profiler next to perf](example.png?raw=true)
+
+It still has some issues with unresolvable functions and finding the callers for
+`_mcount`, but overall, I’m very happy with it :-)
 
 ## License
 
-  LGPLv3
+  GPLv3
 
