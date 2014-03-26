@@ -13,14 +13,14 @@
   "dependencies": {
   },
   "devDependencies": {
+    "istanbul": "*",
     "mocha": "*",
     "should": "*",
-    "jscoverage": "*",
     "coveralls": "*",
-    "mocha-lcov-reporter": "*"
+    "jshint": "*"
   },
   "scripts": {
-    "test": "make test && make test-coveralls"
+    "test": "make test-coveralls"
   },
   "repository": "git://github.com/Swatinem/perf-cpuprofile.git",
   "license": "LGPLv3"

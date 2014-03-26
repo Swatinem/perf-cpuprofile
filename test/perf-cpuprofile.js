@@ -279,7 +279,7 @@ function toArray(stream, callback) {
 	var arr = [];
 	function tryRead() {
 		var read;
-		while (read = stream.read()) {
+		while ((read = stream.read())) {
 			arr.push(read);
 		}
 		stream.once('readable', tryRead);

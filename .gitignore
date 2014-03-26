@@ -1,6 +1,5 @@
 node_modules
-lib-cov
-coverage.html
+coverage
 npm-debug.log
 *.tgz
 *.patch
