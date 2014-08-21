@@ -39,7 +39,7 @@ describe('Samples', function () {
 		var input = new PassThrough({objectMode: true});
 		var samples = new Samples();
 		input.pipe(samples);
-		input.push('a-header 123456 cycles:\n');
+		input.push('a-header 123456 123.123: cycles:\n');
 		input.push('	00deadbeef functionname (libfoo.so.0.0)');
 		input.push(null);
 		toArray(samples, function (arr) {
@@ -55,11 +55,11 @@ describe('Samples', function () {
 		var input = new PassThrough({objectMode: true});
 		var samples = new Samples();
 		input.pipe(samples);
-		input.push('a-header 123456 cycles:\n');
+		input.push('a-header 123456 123.123: cycles:\n');
 		input.push('	00deadbeef subcall (libfoo.so.0.0)\n');
 		input.push('	00deadbeef functionname (libfoo.so.0.0)\n');
 		input.push('\n');
-		input.push('a-header 123456 cycles:\n');
+		input.push('a-header 123456 123.123: cycles:\n');
 		input.push('	00deadbeef2 functionname2 (libbar.so.0.0)\n');
 		input.push(null);
 		toArray(samples, function (arr) {
@@ -193,7 +193,7 @@ describe('perfCpuprofile', function () {
 	it('should put all the pieces together', function (done) {
 		var input = new PassThrough();
 		input.push('# a comment\n\n');
-		input.push('a-header 123456 cycles:\n');
+		input.push('a-header 123456 123.123: cycles:\n');
 		input.push('	00deadbeef subcall (libfoo.so.0.0)\n');
 		input.push('	00deadbeef functionname (libfoo.so.0.0)');
 		input.push(null);
