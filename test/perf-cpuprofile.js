@@ -43,11 +43,13 @@ describe('Samples', function () {
 		input.push('	00deadbeef functionname (libfoo.so.0.0)');
 		input.push(null);
 		toArray(samples, function (arr) {
-			arr.should.eql([[{
+			arr.length.should.eql(1);
+			arr[0].stack.length.should.eql(1);
+			arr[0].stack[0].should.eql({
 				function: 'functionname',
 				object: 'libfoo.so.0.0',
 				address: '00deadbeef'
-			}]]);
+			});
 			done();
 		});
 	});
@@ -63,7 +65,9 @@ describe('Samples', function () {
 		input.push('	00deadbeef2 functionname2 (libbar.so.0.0)\n');
 		input.push(null);
 		toArray(samples, function (arr) {
-			arr.should.eql([[{
+			arr.length.should.eql(2);
+			arr[0].stack.length.should.eql(2);
+			arr[0].stack.should.eql([{
 				function: 'subcall',
 				object: 'libfoo.so.0.0',
 				address: '00deadbeef'
@@ -71,11 +75,14 @@ describe('Samples', function () {
 				function: 'functionname',
 				object: 'libfoo.so.0.0',
 				address: '00deadbeef'
-			}], [{
+			}]);
+
+			arr[1].stack.length.should.eql(1);
+			arr[1].stack.should.eql([{
 				function: 'functionname2',
 				object: 'libbar.so.0.0',
 				address: '00deadbeef2'
-			}]]);
+			}]);
 			done();
 		});
 	});
@@ -86,7 +93,7 @@ describe('Accumulator', function () {
 		var input = new PassThrough({objectMode: true});
 		var accumulator = new Accumulator();
 		input.pipe(accumulator);
-		input.push([{
+		input.push({stack: [{
 				function: 'subcall',
 				object: 'libfoo.so.0.0',
 				address: '00deadbeef'
@@ -94,7 +101,7 @@ describe('Accumulator', function () {
 				function: 'functionname',
 				object: 'libfoo.so.0.0',
 				address: '00deadbeef'
-			}]);
+			}]});
 		input.push(null);
 		toArray(accumulator, function (arr) {
 			var out = example();
@@ -115,8 +122,8 @@ describe('Accumulator', function () {
 			object: 'libfoo.so.0.0',
 			address: '00deadbeef'
 		}];
-		input.push(frame);
-		input.push(frame);
+		input.push({stack: frame});
+		input.push({stack: frame});
 		input.push(null);
 		toArray(accumulator, function (arr) {
 			var out = example();
@@ -140,13 +147,13 @@ describe('Accumulator', function () {
 			object: 'libfoo.so.0.0',
 			address: '00deadbeef'
 		}];
-		input.push(frame);
+		input.push({stack: frame});
 		var frame2 = [frame[0], {
 			function: 'otherfunction',
 			object: 'libfoo.so.0.0',
 			address: '00deadbeef'
 		}];
-		input.push(frame2);
+		input.push({stack: frame2});
 		input.push(null);
 		toArray(accumulator, function (arr) {
 			var out = example();
@@ -170,13 +177,13 @@ describe('Accumulator', function () {
 			object: 'libfoo.so.0.0',
 			address: '00deadbeef'
 		}];
-		input.push(frame);
+		input.push({stack: frame});
 		var frame2 = [{
 			function: '[unknown]',
 			object: 'libfoo.so.0.0',
 			address: '00deadbeef'
 		}, frame[1]];
-		input.push(frame2);
+		input.push({stack: frame2});
 		input.push(null);
 		toArray(accumulator, function (arr) {
 			var out = example();

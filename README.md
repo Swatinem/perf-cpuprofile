@@ -34,6 +34,12 @@ Then just open up the file in chromiums devtools profile tab, and voilà:
 It still has some issues with unresolvable functions and finding the callers for
 `_mcount`, but overall, I’m very happy with it :-)
 
+## Helpers
+
+Run node with `--perf-basic-prof` to prodive js stacks.
+You can then try to filter the output as explained in
+[this gist](https://gist.github.com/trevnorris/9616784).
+
 ## License
 
   GPLv3
