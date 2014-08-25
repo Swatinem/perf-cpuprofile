@@ -135,7 +135,7 @@ describe('Accumulator', function () {
 		input.push(null);
 		toArray(accumulator, function (arr) {
 			var out = example();
-			out.endTime = 0.002;
+			out.endTime = 124.456789;
 			out.samples.push(3);
 			out.timestamps.push(124456789);
 			out.head.children[0].children[0].hitCount = 2;
@@ -172,7 +172,7 @@ describe('Accumulator', function () {
 		input.push(null);
 		toArray(accumulator, function (arr) {
 			var out = example();
-			out.endTime = 0.002;
+			out.endTime = 124.456789;
 			out.samples.push(5);
 			out.timestamps.push(124456789);
 			out.head.children.push(exampleSumtree);
@@ -209,7 +209,7 @@ describe('Accumulator', function () {
 		input.push(null);
 		toArray(accumulator, function (arr) {
 			var out = example();
-			out.endTime = 0.002;
+			out.endTime = 124.456789;
 			out.samples.push(4);
 			out.timestamps.push(124456789);
 			out.head.children[0].children.push(exampleUnknown);
@@ -241,8 +241,8 @@ var exampleOut = {
   "timestamps": [
     123456789
   ],
-  "startTime": 0,
-  "endTime": 0.001,
+  "startTime": 123.456789,
+  "endTime": 123.456789,
   "head": {
     "id": 1,
     "callUID": 0,
