@@ -40,6 +40,9 @@ Run node with `--perf-basic-prof` to prodive js stacks.
 You can then try to filter the output as explained in
 [this gist](https://gist.github.com/trevnorris/9616784).
 
+    $ time perf record -F 10000 --no-buffering -g node --harmony --perf-basic-prof /usr/lib/node_modules/nlz/bin/nlz-build.js
+    $ perf script | egrep "(cycles|LazyCompile|(^$))" | perf-cpuprofile
+
 ## License
 
   GPLv3

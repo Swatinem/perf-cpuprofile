@@ -1,7 +1,7 @@
 {
   "name": "perf-cpuprofile",
   "description": "Converts linux `perf` tool output to .cpuprofile files readable by chromiums devtools",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "keywords": [],
   "bin": {
     "perf-cpuprofile": "./bin/perf-cpuprofile.js"
