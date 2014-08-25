@@ -93,7 +93,9 @@ describe('Accumulator', function () {
 		var input = new PassThrough({objectMode: true});
 		var accumulator = new Accumulator();
 		input.pipe(accumulator);
-		input.push({stack: [{
+		input.push({
+			timestamp: 123.456789,
+			stack: [{
 				function: 'subcall',
 				object: 'libfoo.so.0.0',
 				address: '00deadbeef'
@@ -122,13 +124,20 @@ describe('Accumulator', function () {
 			object: 'libfoo.so.0.0',
 			address: '00deadbeef'
 		}];
-		input.push({stack: frame});
-		input.push({stack: frame});
+		input.push({
+			timestamp: 123.456789,
+			stack: frame
+		});
+		input.push({
+			timestamp: 124.456789,
+			stack: frame
+		});
 		input.push(null);
 		toArray(accumulator, function (arr) {
 			var out = example();
 			out.endTime = 0.002;
 			out.samples.push(3);
+			out.timestamps.push(124456789);
 			out.head.children[0].children[0].hitCount = 2;
 			arr.should.eql([out]);
 			done();
@@ -147,18 +156,25 @@ describe('Accumulator', function () {
 			object: 'libfoo.so.0.0',
 			address: '00deadbeef'
 		}];
-		input.push({stack: frame});
+		input.push({
+			timestamp: 123.456789,
+			stack: frame
+		});
 		var frame2 = [frame[0], {
 			function: 'otherfunction',
 			object: 'libfoo.so.0.0',
 			address: '00deadbeef'
 		}];
-		input.push({stack: frame2});
+		input.push({
+			timestamp: 124.456789,
+			stack: frame2
+		});
 		input.push(null);
 		toArray(accumulator, function (arr) {
 			var out = example();
 			out.endTime = 0.002;
 			out.samples.push(5);
+			out.timestamps.push(124456789);
 			out.head.children.push(exampleSumtree);
 			arr.should.eql([out]);
 			done();
@@ -177,18 +193,25 @@ describe('Accumulator', function () {
 			object: 'libfoo.so.0.0',
 			address: '00deadbeef'
 		}];
-		input.push({stack: frame});
+		input.push({
+			timestamp: 123.456789,
+			stack: frame
+		});
 		var frame2 = [{
 			function: '[unknown]',
 			object: 'libfoo.so.0.0',
 			address: '00deadbeef'
 		}, frame[1]];
-		input.push({stack: frame2});
+		input.push({
+			timestamp: 124.456789,
+			stack: frame2
+		});
 		input.push(null);
 		toArray(accumulator, function (arr) {
 			var out = example();
 			out.endTime = 0.002;
 			out.samples.push(4);
+			out.timestamps.push(124456789);
 			out.head.children[0].children.push(exampleUnknown);
 			arr.should.eql([out]);
 			done();
@@ -200,7 +223,7 @@ describe('perfCpuprofile', function () {
 	it('should put all the pieces together', function (done) {
 		var input = new PassThrough();
 		input.push('# a comment\n\n');
-		input.push('a-header 123456 123.123: cycles:\n');
+		input.push('a-header 123456 123.456789: cycles:\n');
 		input.push('	00deadbeef subcall (libfoo.so.0.0)\n');
 		input.push('	00deadbeef functionname (libfoo.so.0.0)');
 		input.push(null);
@@ -214,6 +237,9 @@ describe('perfCpuprofile', function () {
 var exampleOut = {
   "samples": [
     3
+  ],
+  "timestamps": [
+    123456789
   ],
   "startTime": 0,
   "endTime": 0.001,
